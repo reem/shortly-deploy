@@ -50,6 +50,13 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      minify: {
+        expand: true,
+        cwd: 'public/',
+        src: 'style.css',
+        dest: 'public/dist',
+        ext: '.min.css'
+      }
     },
 
     watch: {
@@ -110,7 +117,8 @@ module.exports = function(grunt) {
     'jshint',
     'mochaTest:test',
     'concat',
-    'uglify'
+    'uglify',
+    'cssmin:minify'
   ]);
 
   grunt.registerTask('upload', function(n) {
