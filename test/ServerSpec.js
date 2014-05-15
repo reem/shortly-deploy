@@ -1,3 +1,4 @@
+/* globals require, describe, it, beforeEach, console */
 var request = require('supertest');
 var express = require('express');
 var expect = require('chai').expect;
@@ -11,13 +12,13 @@ var Link = require('../app/models/link');
 // NOTE: these tests are designed for mongo!
 /////////////////////////////////////////////////////
 
-xdescribe('', function() {
+describe('', function() {
 
   beforeEach(function(done) {
     // Log out currently signed in user
     request(app)
       .get('/logout')
-      .end(function(err, res) {
+      .end(function() {
 
         // Delete objects from db so they can be created later for the test
         Link.remove({url : 'http://www.roflzoo.com/'}).exec();
@@ -34,7 +35,8 @@ xdescribe('', function() {
       request(app)
         .post('/links')
         .send({
-          'url': 'definitely not a valid url'})
+          'url': 'definitely not a valid url'
+        })
         .expect(404)
         .end(done);
     });
@@ -45,7 +47,8 @@ xdescribe('', function() {
         request(app)
           .post('/links')
           .send({
-            'url': 'http://www.roflzoo.com/'})
+            'url': 'http://www.roflzoo.com/'
+          })
           .expect(200)
           .expect(function(res) {
             expect(res.body.url).to.equal('http://www.roflzoo.com/');
@@ -58,7 +61,8 @@ xdescribe('', function() {
         request(app)
           .post('/links')
           .send({
-            'url': 'http://www.roflzoo.com/'})
+            'url': 'http://www.roflzoo.com/'
+          })
           .expect(200)
           .expect(function(res) {
             Link.findOne({'url' : 'http://www.roflzoo.com/'})
@@ -74,7 +78,8 @@ xdescribe('', function() {
         request(app)
           .post('/links')
           .send({
-            'url': 'http://www.roflzoo.com/'})
+            'url': 'http://www.roflzoo.com/'
+          })
           .expect(200)
           .expect(function(res) {
             Link.findOne({'url' : 'http://www.roflzoo.com/'})
@@ -89,14 +94,14 @@ xdescribe('', function() {
     }); // 'Shortening Links'
 
     describe('With previously saved urls: ', function() {
-
+var link;
       beforeEach(function(done) {
         link = new Link({
           url: 'http://www.roflzoo.com/',
           title: 'Rofl Zoo - Daily funny animal pictures',
           base_url: 'http://127.0.0.1:4568',
           visits: 0
-        })
+        });
 
         link.save(function() {
           done();
