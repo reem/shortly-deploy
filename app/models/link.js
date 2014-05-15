@@ -2,7 +2,7 @@ var db = require('../config');
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 
-var linkSchema = mongoose.schema({
+var linkSchema = mongoose.Schema({
   url: String,
   base_url: String,
   code: String,

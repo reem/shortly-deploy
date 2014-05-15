@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
-var userSchema = mongoose.schem({
+var userSchema = mongoose.Schema({
   username: String,
   password: String
 });
@@ -16,11 +16,11 @@ userSchema.methods.hashPassword = function () {
     });
 };
 
-userSchema.methods.comparePassword = function (attempt, callback) {
+userSchema.methods.comparePassword = Promise.promisify(function (attempt, callback) {
   bcrypt.compare(attempt, this.password, function(err, isMatch) {
     callback(isMatch);
   });
-};
+});
 
 var User = mongoose.model('User', userSchema);
 
