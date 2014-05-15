@@ -121,7 +121,7 @@ module.exports = function(grunt) {
     'cssmin:minify'
   ]);
 
-  grunt.registerTask('upload', function(n) {
+  grunt.registerTask('upload', function() {
     if(grunt.option('prod')) {
       grunt.task.run(['shell:prodServer']);
     } else {
